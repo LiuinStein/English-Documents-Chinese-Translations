@@ -42,3 +42,43 @@ REST是**RE**presentational **S**tate **T**ransfer（表述性状态传递）的
 >
 > 此处将timestamp译为时间点，timestamp主要指UNIX时间戳，UNIX时间戳是指从1970年1月1日（UTC/GMT的午夜）开始所经过的秒数
 
+对数据格式的表述就是[media type](https://www.iana.org/assignments/media-types/media-types.xhtml)，media type标识定义了一个资源的表述是如何被处理的，一个真正的Restful API看上去应该像超文本一样，每一个可寻址的信息单元应当显式（例如在链接或属性id）或非显式（例如包含在media type定义或资源表述结构里）地携带着一个地址。
+
+> 依据Roy Fielding的话:
+>
+> Hypertext（超文本）意味着同时呈现信息和控制，使得信息成为用户（或自动机）成为获取选择和以及选择动作的可供件。超文本不需要非得是HTML（或XML或JSON），机器可以通过跟踪链接来理解数据格式及关系类型。
+
+此外，**资源的表述应当是可以自我描述的（self-descriptive）**：客户端不需要知道一个资源到底是职工还是设备，它应当依据media type与资源间的关联来进行操作。所以，在实践中，你会创建大量的自定义media type，一般情况下，一种media type对应一种资源。
+
+> 对每一个media type定义一个默认的处理模块，例如，HTML为每一个元素（element）定义了一组超文本的渲染过程以及浏览器行为，这与对资源的操作方法例如GET/PUT/POST/DELETE/并没有任何的关系。除了一些媒体元素定义了一组带有`href`标签的锚元素处理过程模型将会在被选中时创建一个超链接以及打开一个队应URI的数据获取请求（GET）
+
+### Resource Method
+
+另一个与REST有关的事情是用来执行预期过渡（transition）的资源方法（resource methods），很多人错误地将这些资源方法与HTTP的请求方法GET/PUT/POST/DELETE关联起来。
+
+Roy Fielding从来都没有提过任何有关在某种情况下具体使用哪种（HTTP请求）方法的建议。他强调的仅有应当统一接口（uniform interface）。如果你决定使用POST请求来更新一个资源，而不是大多数人推荐的PUT，这其实也是没有问题的，而且应用程序的接口也同样会是RESTful。
+
+在理想状况下，改变资源状态信息所需的一切都应成为对该资源API响应（response）的一部分，包括方法以及他们将在何种状态下离开当前的状态。
+
+> 一个REST API在进入的时候应当没有除了为预定使用者约定的URI以及一组标准化的media type之外的其他的任何预先的了解，即预计任何可能使用这个API的客户端都应当可以理解。从那时起，所有的应用状态过渡必需由客户端对服务端提供的选择来进行驱动，这些选择存在于接收到的表述中，或者是对用户操作的描述。这些过渡可能由客户端对media type的了解以及资源的通信机制决定，这两者都可以被即时修改（例如：需求的变化）
+>
+> [这里的失败意味着其他的信息正在驱动着交互而不是超文本]
+
+> 译者注
+>
+> 这里可以参考一下[GitHub API](https://api.github.com/)的设计，当我们访问这个域名时，即会获得一份当前可用的API列表，其中包含了每个API的访问地址
+>
+> > 这其实就是上文中所说的REST API在进入的时候没有除了为预定使用者约定的URI以及一组标准化的media type之外的其他的任何预先的了解。
+>
+> 当我们进一步访问其中的某一个API地址时，我们可以获取有关信息，以及API文档地址，产生一个过渡，例如访问[current_user_url](https://api.github.com/)这个API我们可以得到如下信息：
+>
+> ```json
+> {
+>   "message": "Requires authentication",
+>   "documentation_url": "https://developer.github.com/v3/users/#get-the-authenticated-user"
+> }
+> ```
+>
+> `message`字段告诉我们需要授权，授权也就相应产生了一个应用状态上的过渡。
+
+另一个可以帮助你建立RESTful API的事情是基于查询的API结果应当由包含摘要信息的链接来表示，而不是一个源资源表述的数组，因为查询并不是对资源标识的替代品。
