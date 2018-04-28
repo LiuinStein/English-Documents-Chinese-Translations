@@ -82,3 +82,22 @@ Roy Fielding从来都没有提过任何有关在某种情况下具体使用哪�
 > `message`字段告诉我们需要授权，授权也就相应产生了一个应用状态上的过渡。
 
 另一个可以帮助你建立RESTful API的事情是基于查询的API结果应当由包含摘要信息的链接来表示，而不是一个源资源表述的数组，因为查询并不是对资源标识的替代品。
+
+### REST and HTTP are not same !!
+
+很多人喜欢拿HTTP与REST相比较，但其实HTTP和REST是两样不同的东西。
+
+> **REST != HTTP**
+
+虽然REST同样倾向于使WEB（internet）更加精简和高效，他（代指REST发明人Roy fielding）主张更加严格地遵循REST准则。同样，这也是人们试图将REST与Web（HTTP）进行比较的地方。Roy fielding在他的博士论文里从来没有提到过任何（有关REST的）直接的实现方法-包括任何协议选择以及HTTP。直到现在，你只要履行REST的6个基本准则，你就可以将你的接口称作RESTful。
+
+简单来说，在REST体系风格中，数据和功能通常被认为是一种可以通过统一资源定位符（URI）访问的一种资源。通过使用一组简单，定义明确的操作来操纵这些资源。客户端与服务端通过使用标准化的接口和协议（通常是HTTP）来交换资源的表述。
+
+资源与其表述进行分离后即可以使用多种形式来访问其内容，就比如说HTML, XML, plain text, PDF, JPEG, JSON等等。资源的metadata同样是可以访问并使用的，例如，进行缓存的控制、发现传输中的错误、协商适当的资源表述形式以及执行授权与访问控制。最重要的是，每一次带有资源的交互都是无状态的。
+
+所有的这些准则使得RESTful应用变得简单、轻量和高效。
+
+参考资料：
+
+<http://roy.gbiv.com/untangled/2008/rest-apis-must-be-hypertext-driven>
+[http://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm](https://www.ics.uci.edu/~fielding/pubs/dissertation/rest_arch_style.htm)
