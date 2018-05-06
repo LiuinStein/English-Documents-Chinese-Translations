@@ -41,7 +41,7 @@ http://api.example.com/user-management/users/
 http://api.example.com/user-management/users/{id}
 ```
 
-为了更清楚起见，让我们把**资源的原型（resource archetypes）**分为4个不同的类型（document 文档，collection 集合，store 存储，controller 控制器），**你应该始终将一个资源对应一种原型，然后遵循它的命名约定**。由于一致性的缘故，抵制设计不止一种原型的混合资源的诱惑。 
+为了更清楚起见，让我们把**资源的原型（resource archetypes）**分为4个不同的类型（document，collection，store，controller），**你应该始终将一个资源对应一种原型，然后遵循它的命名约定**。由于一致性的缘故，抵制设计不止一种原型的混合资源的诱惑。 
 
 1. **属性** （document）
    资源属性是一个单一的概念，它类似于一个对象实例或一条数据库记录。在REST中，你可以将其视为一个资源集合中的单个资源。一个属性的状态表现层通常包含具有值的字段以及指向其他相关资源的链接。
@@ -65,4 +65,26 @@ http://api.example.com/user-management/users/{id}
    > 如果有更好的翻译方法，请提交Issue或pull request
 
 2. **集合**
-   一个集合的资源是一个由服务器管理的资源的目录。客户端可能会向其添加新的资源。然而，它取决于要创建新资源的集合
+   一个集合的资源是一个由服务器管理的资源目录。客户端可能会向其添加新的资源。然而，它取决于要创建新资源的集合。一个集合资源选择它到底包含什么样的资源并且决定每个所包含资源的URI。
+   使用“复数”名词来表示集合资源原型
+
+   ```
+   http://api.example.com/device-management/managed-devices
+   http://api.example.com/user-management/users
+   http://api.example.com/user-management/users/{id}/accounts
+   ```
+
+3. **store**（这个真不知道怎么翻译合适了）
+   store是一个由客户端维护的资源库，一个store类型的资源可以让API客户端将资源放进去或者拿出来并且决定什么时候删除它们。store从来不生成新的URI，相反，每个存储的资源在将他们放入store的时候都有一个由客户端决定的URI。
+   使用“复数”名词来表示store资源原型
+
+   ```
+   http://api.example.com/cart-management/users/{id}/carts
+   http://api.example.com/song-management/users/{id}/playlists
+   ```
+
+   > 译者注：
+   >
+   > 这个store究竟是个什么呢，这里肯定不能翻译成商店，翻译成存储库或贮藏处吧又不是很合适，不能合理地表述其意思。
+   >
+   > 这里的store究竟是个啥呢，打个比方啊，假设说让我们设计一个类似淘宝客户端的API，用户在客户端点击将商品添加至购物车，购物车信息就可以放进这个store里，这个store是由客户端维护的，实际是存储在服务端的，对其的增删改查都是由客户端决定的，例如淘宝的购物车是同步的，你在电脑端添加了购物车在手机端也可以看到你购物车里的物品，为了实现这个购物车的同步，我们就要在服务端设置一个用来存放你当前购物车信息的数据库或存储位置，这个由客户端维护的数据库或存储库就是这里的store。在设计同步购物车API的时候，我们就要用复数名词来表示store的资源类型，就是这样。
