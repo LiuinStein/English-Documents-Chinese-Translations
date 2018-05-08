@@ -102,3 +102,49 @@ http://api.example.com/user-management/users/{id}
    >
    > 这里的控制器资源，打个比方吧，还是那个淘宝的API，上一个store里面我们讲了一个同步购物车，现在说一下这个购物车的结算，当用户点击结账按钮的时候，调用某一个API对购物车进行结账，结账就相当于是一个控制器资源，这时这个API我们就可以设计成上面例1的形式，在URI里面加入动词`checkout`，来表示结算
 
+#### 一致性（使用的命名规范）是关键
+
+为了使歧义最小化以及获得最大化的可读性和可维护性，我们需要使用一套一致的资源命名约定以及URI格式，你可以参考以下的设计提示来进行实现：
+
+1. **使用斜杠（/）来区分分级关系**
+   斜杠（/）字符一般用在URI上来指定一个资源间的分级关系，例如：
+
+   ```
+   http://api.example.com/device-management
+   http://api.example.com/device-management/managed-devices
+   http://api.example.com/device-management/managed-devices/{id}
+   http://api.example.com/device-management/managed-devices/{id}/scripts
+   http://api.example.com/device-management/managed-devices/{id}/scripts/{id}
+   ```
+
+2. **不要在URI的末尾使用斜杠（/）**
+   作为URI路径的最后一个字符，一个斜杠（/）并没有价值并且可能会导致混乱，最好是在URI的末尾不要加斜杠（/），例如
+
+   ```
+   http://api.example.com/device-management/managed-devices/
+   http://api.example.com/device-management/managed-devices 
+   ```
+
+   例2的设计相对好些
+
+3. **使用横杠（-）来提升URI的可读性**
+   为了使你的URI更加容易被人理解和解释，在路径较长的部分，使用横杠（-）来提升名称的可读性
+
+   ```
+   http://api.example.com/inventory-management/managed-entities/{id}/install-script-location
+   http://api.example.com/inventory-management/managedEntities/{id}/installScriptLocationreadable
+   ```
+
+   例1的可读性相对好些
+
+4. **不要使用下划线（_）**
+   有时候可能会用下划线（_）来代替横杠（-）作为分隔符，但是取决于应用前端，下划线（\_）字符可能会在某些浏览器或屏幕中部分模糊或完全隐藏。 
+   为了避免这种误解，使用横杠（-）而不是下划线（_）
+
+   ```
+   http://api.example.com/inventory-management/managed-entities/{id}/install-script-location
+   http://api.example.com/inventory_management/managed_entities/{id}/install_script_location
+   ```
+
+   
+
