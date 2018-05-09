@@ -146,5 +146,28 @@ http://api.example.com/user-management/users/{id}
    http://api.example.com/inventory_management/managed_entities/{id}/install_script_location
    ```
 
-   
+5. **在URI中使用小写字符**
+   小写字符在URI中始终是首选
+   [RFC 3986](http://www.rfc-base.org/txt/rfc-3986.txt) 定义除了请求方法和主机名称之外的其他的URI部分为大小写敏感的，例如：
+
+   ```
+   http://api.example.org/my-folder/my-doc  //1
+   HTTP://API.EXAMPLE.ORG/my-folder/my-doc  //2
+   http://api.example.org/My-Folder/my-doc  //3
+   ```
+
+   1和2是相同的，3却是不同的，因为他的`My-Folder`用了大写字符
+
+6. **不要使用文件扩展名（在URI中）**
+   URI中的文件扩展名看上去不怎么样并且并没有任何好处。将它除去可以减少URI的长度，没有留着它的理由。
+   除了上述原因外，如果你想着重使用文件扩展名来表示API的媒体类型的话，你应当通过将去放入HTTP头部的`Content-Type `字段，以此来决定如何处理body的内容。
+
+   ```
+   /*不要这么用*/
+   http://api.example.com/device-management/managed-devices.xml
+   /*这么用才对*/
+   http://api.example.com/device-management/managed-devices
+   ```
+
+#### Never use CRUD function names in URIs
 
