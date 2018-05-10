@@ -102,7 +102,7 @@ http://api.example.com/user-management/users/{id}
    >
    > 这里的控制器资源，打个比方吧，还是那个淘宝的API，上一个store里面我们讲了一个同步购物车，现在说一下这个购物车的结算，当用户点击结账按钮的时候，调用某一个API对购物车进行结账，结账就相当于是一个控制器资源，这时这个API我们就可以设计成上面例1的形式，在URI里面加入动词`checkout`，来表示结算
 
-#### 一致性（使用的命名规范）是关键
+#### Consistency is the key
 
 为了使歧义最小化以及获得最大化的可读性和可维护性，我们需要使用一套一致的资源命名约定以及URI格式，你可以参考以下的设计提示来进行实现：
 
@@ -170,4 +170,27 @@ http://api.example.com/user-management/users/{id}
    ```
 
 #### Never use CRUD function names in URIs
+
+URI不应当用来指示增删改查这些操作，URI应当用来指示资源并且不应当含有任何操作信息。HTTP请求方法应当被用来指示所调用的增删改查操作。
+
+```
+// 获取所有的设备信息
+HTTP GET http://api.example.com/device-management/managed-devices  
+// 创建一个新的设备
+HTTP POST http://api.example.com/device-management/managed-devices 
+// 通过给定的设备id来检索设备信息
+HTTP GET http://api.example.com/device-management/managed-devices/{id}
+// 通过给定的设备id来更新设备信息
+HTTP PUT http://api.example.com/device-management/managed-devices/{id}
+// 通过给定的设备id来删除设备信息
+HTTP DELETE http://api.example.com/device-management/managed-devices/{id}
+```
+
+> 译者注：
+>
+> CRUD即指Create, Read, Update, Delete，就是增删改查四项操作
+>
+> 详细细节可参考[维基百科](https://en.wikipedia.org/wiki/Create,_read,_update_and_delete)
+
+#### Use query component to filter URI collection
 
