@@ -194,3 +194,11 @@ HTTP DELETE http://api.example.com/device-management/managed-devices/{id}
 
 #### Use query component to filter URI collection
 
+在多数情况下，你可能需要对一个资源集合进行排序、过滤、或者限制某一个特定的资源属性的值。你不用创建一个新的API来实现这些，而是在资源集合的API中启用排序，筛选和分页功能，并将输入参数作为查询参数传递 。例如
+
+```
+http://api.example.com/device-management/managed-devices
+http://api.example.com/device-management/managed-devices?region=USA
+http://api.example.com/device-management/managed-devices?region=USA&brand=XYZ
+http://api.example.com/device-management/managed-devices?region=USA&brand=XYZ&sort=installation-date
+```
