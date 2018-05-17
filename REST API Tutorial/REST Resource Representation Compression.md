@@ -34,3 +34,24 @@ Accept-Encoding: gzip;q=1.0, identity; q=0.5, *;q=0
 ```
 
 如果请求中包含`Accept-Encoding`字段，并且如果服务端不能返回`Accept-Encoding`所指示的编码格式的数据，服务端应该向其返回406（Not Acceptable）错误。
+
+#### Content-Encoding
+
+如果服务端可以接受`Accept-Encoding`中所指示的压缩算法，它可以使用该压缩算法在响应之前压缩资源的表现层。当成功压缩完成之后，服务端必需通过HTTP响应头`Content-Encoding`让客户端知道其到底使用了哪种编码方式。
+
+```
+200 OK
+Content-Type:     text/html
+Content-Encoding:     gzip
+```
+
+如果服务器并不支持请求信息中所要求的实体的编码方式，服务端应当返回415（Unsupported Media Type）。如果实体可以支持多种编码，`Content-Encoding`必须将其一一列出。
+
+请注意，请求或响应的源数据类型并不影响到其是否被会被压缩。
+
+压缩数据可以节省很多带宽，并且只需要很少的附加成本。同样，你也可能知道，目前的大多数web浏览器都会使用上述的请求或响应头自动向服务器请求压缩后的数据。
+
+> 译者注：
+>
+> 此处的附加成本指的是压缩数据时，CPU的多余消耗
+
