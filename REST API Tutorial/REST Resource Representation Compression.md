@@ -55,3 +55,6 @@ Content-Encoding:     gzip
 >
 > 此处的附加成本指的是压缩数据时，CPU的多余消耗
 
+参考资料：
+
+<https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.11> <https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.3> 
