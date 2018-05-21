@@ -31,4 +31,26 @@
 
    > 通过`Accept`头来实现内容协商是最广泛使用的同时也是最推荐的方法。
 
-   
+2. **Content negotiation using URL patterns**
+   另一种向服务端请求内容类型信息的方法是客户端在访问资源URI时使用特定的扩展名。例如，客户端可以通过以下方法来获取详细信息：
+
+   ```
+   http://rest.api.com/v1/employees/20423.xml
+   http://rest.api.com/v1/employees/20423.json
+   ```
+
+   在上述例子中，第一个请求的URI必需返回一个XML格式的响应数据，第二个必需返回JSON格式的响应数据
+
+### Defining preferences
+
+`Accept`请求头可能含有多个取值。如果客户端并不确定它想请求的资源表现层是否存在或者服务器是否支持，那么它可能会在`Accept`字段中同时给出多个取值。[[RFC 2296](https://tools.ietf.org/html/rfc2296)] 
+
+例如：
+
+```
+Accept: application/json,application/xml;q=0.9,*/*;q=0.8
+```
+
+上述`Accept`请求头首先向服务器请求JSON格式的数据，如果服务器不支持，它可能会返回一个XML格式的数据（第二级）。如果它还是不能返回XML，它会返回它能支持的数据。
+
+通过q参数来指定优先级顺序，q的取值在0和1之间。如果没有指定的话，默认值为1。
