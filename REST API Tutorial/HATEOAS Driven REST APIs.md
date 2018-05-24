@@ -37,3 +37,18 @@ Link: <10/employees>; rel="employees"
 这两者都是合适的解决方案。
 
 ### HATEOAS Implementation
+
+在现实世界中，当你访问一个网站的时候，你点击了它的主页。他会现实一个网页的快照以及一些链接到其他网站部分的链接。你点击这些链接，然后你将会获得更多与上下文相关的链接。
+
+与人类浏览网页相似，**一个REST客户端访问初始API URI，然后使用服务端提供的链接来动态寻求可使用的动作以及获取相关资源**。一个客户端并不需要对有关服务以及不同步骤有任何的预先了解。此外，**无需将不同资源的URI地址结构硬编码到客户端内**，这同样允许在无需修改客户端的情况下，服务端随着API的演变而修改URI地址。
+
+> 译者注：
+>
+> 硬编码就是写死到代码里。
+
+以上API交互必需使用HATEOAS。
+
+每一个REST框架都会提供其自己的HATEOAS实现方法，例如在[这篇文章](https://howtodoinjava.com/resteasy/writing-restful-webservices-with-hateoas-using-jax-rs-and-jaxb-in-java/)内，链接作为资源模型类的一部分，并作为资源状态传递给客户端。
+
+### HATEOAS References
+
