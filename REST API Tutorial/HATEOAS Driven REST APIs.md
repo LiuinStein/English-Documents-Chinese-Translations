@@ -52,3 +52,47 @@ Link: <10/employees>; rel="employees"
 
 ### HATEOAS References
 
+下面是两个主流的JSON REST API超媒体链接格式：
+
+#### RFC 5988 (web linking)
+
+[RFC 5988](https://tools.ietf.org/html/rfc5988)提出了一个用来构建定义网络上资源间关系链接的框架。符合RFC 5988标准的链接应当包含以下几个属性：
+
+**Target URI（目标URI）**:每个链接都应当包含一个目标[Internationalized Resource Identifiers 国际化资源标识符](https://en.wikipedia.org/wiki/Internationalized_Resource_Identifier) (IRIs)。这通常由`href`属性来表示。
+
+**Link relation type（链接关系类型）**: 链接关系类型描述的是当前上下文与目标上下文之间的关系。通常由`rel`属性来表示。
+
+> 译者注：
+>
+> ```html
+> <link rel="icon" href="/img/abc.svg">
+> ```
+>
+> 这里的`rel`定义的即为链接`href`所指向的内容与当前HTML页的关系
+
+**Attributes for target IRI（目标IRI属性）**:这个链接属性包括`hreflang`, `media`, `title`以及`type`，以及一些其他的链接属性。 
+
+#### JSON Hypermedia API Language (HAL)
+
+[JSON HAL](https://en.wikipedia.org/wiki/Hypertext_Application_Language)是一个很有希望的提案，其为使用JSON或XML来控制超媒体的表示设置了约定。目前正处于草案阶段。
+
+> 译者注：
+>
+> 这里说他是一个很有希望的提案是因为这个东西目前还处于草案（draft）阶段，没有正式的归入标准。
+
+下面是两个相关联的MIME类型：
+
+```
+media type: application/hal+xml 
+media type: application/hal+json
+```
+
+HAL标准下的每一个链接都应当包含以下属性：
+
+**Target URI（目标URI）**:指出了指定资源的URI。这通常由`href`属性来表示。
+
+**Link relation type（链接关系类型）**: 链接关系类型描述的是当前上下文与目标上下文之间的关系。通常由`rel`属性来表示。
+
+**Type（类型）：**指定了期望的资源媒体类型。通常由`type`属性来表示。
+
+为你的应用程序选择何种超媒体链接格式并没有对错之分。你只需要选择一种你认为最适合你应用程序最符合你需求的即可。
