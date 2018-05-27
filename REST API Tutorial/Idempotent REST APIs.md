@@ -25,3 +25,30 @@
 
 通常情况下，当然也不是必须的，PUT API被用来更新一个资源的状态。如果你多次调用一个PUT请求，一开始的那个请求将会更新资源，然后剩下的那些请求仅仅是重复地执行跟第一遍一样的更新，后面的这些请求实际上并没有改变任何事情。所以，**PUT是幂等的**
 
+### HTTP DELETE
+
+当你请求N次相同的`DELETE`请求时，第一个请求将会从服务器删除资源并且返回`200 (OK)`或者`204 (No Content)`，剩下的N-1个请求将会返回`404 (Not Found)`。显然，剩下的N-1个请求的响应与第一个不同，但是此时在服务端并没有任何资源状态的改变，因为源资源已经在第一个请求完成时被删除了。所以，**DELETE是幂等的**。
+
+请看，有些系统的DELETE API是这样的：
+
+```
+DELETE /item/last
+```
+
+> 译者注：
+>
+> 这个API的用途是删除某个资源集合的最后一个元素。
+
+在上述的例子中，调用N次这个API将会删除N个资源，所以在这个例子中`DELETE`请求不是幂等的。在这个例子中，建议将此处API请求方式改为POST，因为POST不是幂等的。
+
+```
+POST /item/last
+```
+
+这样才更贴切HTTP规范，也因此更符合REST。
+
+引用：
+
+[Rfc 2616](https://www.w3.org/Protocols/rfc2616/rfc2616-sec9.html) 
+
+[SO Thread](https://stackoverflow.com/questions/7016785/is-put-delete-idempotent-with-rest-automatic) 
