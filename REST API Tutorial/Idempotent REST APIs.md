@@ -15,3 +15,8 @@
 
 ### HTTP POST
 
+通常情况下（不是必须的），POST API用来在服务端创建一个新的资源。所以当你多次调用一个POST请求的时候，你将会在服务端创建多个新的资源。所以，**POST不是幂等的**
+
+### HTTP GET, HEAD, OPTIONS and TRACE
+
+`GET`, `HEAD`, `OPTIONS`以及`TRACE`方法并不改变服务器上资源的状态，它们仅是单纯地用来获取资源的表现层或者元数据。所以多次调用这些请求并不会在服务端产生任何写操作，所以`GET`, `HEAD`, `OPTIONS`以及`TRACE`是幂等的。
