@@ -45,4 +45,14 @@ https://api.domain.com/user-management/users/{id}/someAction?apiKey=abcd12345678
 
 #### 考虑OAuth（Consider OAuth）
 
-对于大多数API来说，如果实现正确的话，[basic auth](https://en.wikipedia.org/wiki/Basic_access_authentication)就已经足够了，不过如果你能考虑[OAuth](https://tools.ietf.org/html/rfc6749)那就更好了。OAuth 2.0验证框架可以确保一个第三方的应用对HTTP服务进行有限的访问，不管是对于资源拥有者
+对于大多数API来说，如果实现正确的话，[basic auth](https://en.wikipedia.org/wiki/Basic_access_authentication)就已经足够了，不过如果你能考虑[OAuth](https://tools.ietf.org/html/rfc6749)那就更好了。OAuth 2.0验证框架可以确保一个第三方的应用对HTTP服务进行有限的访问，不管是通过资源拥有者与HTTP服务之间的批准交互还是允许第三方应用以自己的名义获取资源。
+
+#### 在请求中加入时间戳（Consider Adding Timestamp in Request）
+
+跟其他参数一块，你可以在HTTP自定义API请求头中加入请求时间戳。服务端将会比较现在的时间戳与请求中的时间戳，并且仅接受在一小段合理时间段内的请求（可能是1-2分钟）。
+
+这可以抵御基本的[重放攻击](https://en.wikipedia.org/wiki/Replay_attack)，当这些人试图通过[暴力破解](https://en.wikipedia.org/wiki/Brute-force_attack)的方法攻入你的系统而不改变这个时间戳。
+
+#### 请求参数验证（Input Parameter Validation）
+
+验证请求参数往往放在第一步，在进行应用程序逻辑之前。做强的验证检查并立刻拒绝验证失败的请求。在API响应中，发送相关的错误信息并指出示例的正确数据可以提升用户体验。
