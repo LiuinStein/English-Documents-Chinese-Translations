@@ -31,5 +31,16 @@ http://api.example.com/v1
 http://apiv1.example.com
 ```
 
-版本号不一定非得是个数字，也不必非得使用`v[x]`这样的语法格式。替代方案包括日期、项目名称、季节或其他标识符，这些标识符对于产生API的团队来说足够有意义，并且可以随着版本的变化灵活地进行修改。
+版本号不一定非得是个数字，也不必非得使用`v[x]`这样的语法格式。替代方案包括日期、项目名称、季节或其他标识符，这些标识符对于API的开发者团队来说足够有意义，并且可以随着版本的变化灵活地进行修改。
+
+#### Versioning using Custom Request Header
+
+自定义HTTP头字段（比如`Accept-version`）允许你保留不同版本之间的URI，尽管实际上它是使用`Accept`头进行内容协商行为的重复。
+
+例如：
+
+```
+Accept-version: v1
+Accept-version: v2
+```
 
