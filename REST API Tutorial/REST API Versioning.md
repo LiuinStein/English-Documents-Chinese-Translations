@@ -44,3 +44,15 @@ Accept-version: v1
 Accept-version: v2
 ```
 
+#### Versioning using Accept header
+
+内容协商可能会使你的URL看上去不那么冗杂，但是你仍然需要处理一些在不同地方使用了不同版本的API所带来的复杂问题。这个负担同样会带入到你API的Controller里面，你需要使你的Controller识别传送过来的到底是什么版本的资源。最后的结果可能就是使得API更加复杂，客户端必需要知道在请求资源之前要设置哪种请求头。
+
+例如：
+
+```
+Accept: application/vnd.example.v1+json
+Accept: application/vnd.example+json;version=1.0
+```
+
+在实际中，一个API永远不会完全稳定。所以，如何管理这些更改将变得非常重要。一份好的文档以及逐步淘汰掉一些API对大多数API设计来说将会是一个可接受的方法。
